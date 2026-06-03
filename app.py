@@ -306,7 +306,7 @@ def seccion_cosechas(nombre_meta):
     pivot.loc['TOTAL'] = df_tot_pivot
 
     # Formatear para mostrar
-    pivot_fmt = pivot.applymap(lambda x: f"{x:.1f}%" if pd.notna(x) else '—')
+    pivot_fmt = pivot.map(lambda x: f"{x:.1f}%" if pd.notna(x) else '—')
 
     def color_cosecha(val):
         try:
@@ -319,7 +319,7 @@ def seccion_cosechas(nombre_meta):
         return 'background-color:#FFC7CE; color:#C00000'
 
     styler = (pivot_fmt.style
-              .applymap(color_cosecha)
+              .map(color_cosecha)
               .set_table_styles([{
                   'selector': 'th',
                   'props': [('background-color', AZUL_OSCURO),
