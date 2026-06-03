@@ -170,8 +170,9 @@ def colorear_dias(val):
 
 def colorear_mov(val):
     s = str(val)
-    if 'Regular' in s:   return f'color:#375623; font-weight:bold'
-    if 'Mejoró'  in s:   return f'color:{AZUL_MEDIO}; font-weight:bold'
+    if 'Regular'   in s: return 'color:#375623; font-weight:bold'
+    if 'Mejoró'    in s: return f'color:{AZUL_MEDIO}; font-weight:bold'
+    if 'Contención' in s: return 'color:#7B6200; font-weight:bold'
     if 'Deterioró' in s: return 'color:#C00000; font-weight:bold'
     if 'Finalizó'  in s: return 'color:#595959; font-style:italic'
     return ''
@@ -248,15 +249,15 @@ def tabla_buckets_html(df_sec, titulo_label=''):
 
 def metricas_rapidas(df_act):
     mov = df_act['Movimiento'].value_counts() if 'Movimiento' in df_act.columns else pd.Series()
-    regular   = sum(v for k, v in mov.items() if 'Regular' in k)
-    mejoro    = sum(v for k, v in mov.items() if 'Mejoró'  in k)
-    igual     = sum(v for k, v in mov.items() if 'cambio'  in k)
-    deterioro = sum(v for k, v in mov.items() if 'Deterioró' in k)
-    finalizo  = sum(v for k, v in mov.items() if 'Finalizó'  in k)
+    regular    = sum(v for k, v in mov.items() if 'Regular'    in k)
+    mejoro     = sum(v for k, v in mov.items() if 'Mejoró'     in k)
+    contencion = sum(v for k, v in mov.items() if 'Contención' in k)
+    deterioro  = sum(v for k, v in mov.items() if 'Deterioró'  in k)
+    finalizo   = sum(v for k, v in mov.items() if 'Finalizó'   in k)
     c1,c2,c3,c4,c5 = st.columns(5)
     c1.metric("✓ Regularizaron", regular)
     c2.metric("↑ Mejoraron",     mejoro)
-    c3.metric("= Sin cambio",    igual)
+    c3.metric("= Contención",    contencion)
     c4.metric("↓ Deterioraron",  deterioro)
     c5.metric("Finalizaron",     finalizo)
 
@@ -435,7 +436,7 @@ st.markdown(f"""
 <div style="font-size:0.8rem; color:#666; display:flex; gap:1.5rem; flex-wrap:wrap">
     <span style="background:#E2EFDA; padding:2px 8px; border-radius:4px">🟩 0 días — Al corriente</span>
     <span style="background:#EBF3D1; padding:2px 8px; border-radius:4px">🟩 1-2 días — Casi</span>
-    <span style="background:#FFEB9C; padding:2px 8px; border-radius:4px">🟨 3-15 días — En rango</span>
+    <span style="background:#FFEB9C; padding:2px 8px; border-radius:4px">🟨 3-15 días — Contención</span>
     <span style="background:#FFC7CE; padding:2px 8px; border-radius:4px">🟥 16+ días — Deterioró</span>
     <span style="background:#DDEBF7; padding:2px 8px; border-radius:4px">🔵 Finalizó / Pagó</span>
     <b style="margin-left:1rem">Cosecha:</b>
