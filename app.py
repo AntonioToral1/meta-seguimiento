@@ -172,7 +172,7 @@ def colorear_mov(val):
     s = str(val)
     if 'Regular'   in s: return 'color:#375623; font-weight:bold'
     if 'Mejoró'    in s: return f'color:{AZUL_MEDIO}; font-weight:bold'
-    if 'Contención' in s: return 'color:#7B6200; font-weight:bold'
+    if 'Conten' in s: return 'color:#7B6200; font-weight:bold'
     if 'Deterioró' in s: return 'color:#C00000; font-weight:bold'
     if 'Finalizó'  in s: return 'color:#595959; font-style:italic'
     return ''
@@ -251,7 +251,7 @@ def metricas_rapidas(df_act):
     mov = df_act['Movimiento'].value_counts() if 'Movimiento' in df_act.columns else pd.Series()
     regular    = sum(v for k, v in mov.items() if 'Regular'    in k)
     mejoro     = sum(v for k, v in mov.items() if 'Mejoró'     in k)
-    contencion = sum(v for k, v in mov.items() if 'Contención' in k)
+    contencion = sum(v for k, v in mov.items() if 'Conten' in k)
     deterioro  = sum(v for k, v in mov.items() if 'Deterioró'  in k)
     finalizo   = sum(v for k, v in mov.items() if 'Finalizó'   in k)
     c1,c2,c3,c4,c5 = st.columns(5)
