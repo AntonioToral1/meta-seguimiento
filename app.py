@@ -89,9 +89,9 @@ def mostrar_tabla(df_sec, es_actual=False):
     # Aplicar estilos
     styler = df_show.style.hide(axis='index')
     if 'Días Atraso' in df_show.columns:
-        styler = styler.applymap(colorear_dias, subset=['Días Atraso'])
+        styler = styler.map(colorear_dias, subset=['Días Atraso'])
     if es_actual and 'Movimiento' in df_show.columns:
-        styler = styler.applymap(colorear_movimiento, subset=['Movimiento'])
+        styler = styler.map(colorear_movimiento, subset=['Movimiento'])
 
     st.dataframe(styler, use_container_width=True, height=min(600, 50 + len(df_show)*36))
 
