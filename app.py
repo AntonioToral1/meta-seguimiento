@@ -326,10 +326,10 @@ def seccion_cosechas(nombre_meta):
             v = float(str(val).replace('%',''))
         except:
             return ''
-        if v >= 95:   return 'background-color:#E2EFDA; color:#375623; font-weight:bold'
-        if v >= 85:   return 'background-color:#EBF3D1'
-        if v >= 70:   return 'background-color:#FFEB9C'
-        return 'background-color:#FFC7CE; color:#C00000'
+        if v >= 92:  return 'background-color:#E2EFDA; color:#375623; font-weight:bold'
+        if v >= 88:  return 'background-color:#FFEB9C'
+        if v >= 80:  return 'background-color:#FFB347; color:#7A3B00; font-weight:bold'
+        return 'background-color:#FFC7CE; color:#C00000; font-weight:bold'
 
     styler = (pivot_fmt.style
               .map(color_cosecha)
@@ -439,9 +439,9 @@ st.markdown(f"""
     <span style="background:#FFC7CE; padding:2px 8px; border-radius:4px">🟥 16+ días — Deterioró</span>
     <span style="background:#DDEBF7; padding:2px 8px; border-radius:4px">🔵 Finalizó / Pagó</span>
     <b style="margin-left:1rem">Cosecha:</b>
-    <span style="background:#E2EFDA; padding:2px 8px; border-radius:4px">≥95% Excelente</span>
-    <span style="background:#EBF3D1; padding:2px 8px; border-radius:4px">85-94% Buena</span>
-    <span style="background:#FFEB9C; padding:2px 8px; border-radius:4px">70-84% Regular</span>
-    <span style="background:#FFC7CE; padding:2px 8px; border-radius:4px">&lt;70% Atención</span>
+    <span style="background:#E2EFDA; padding:2px 8px; border-radius:4px">≥92% Buena</span>
+    <span style="background:#FFEB9C; padding:2px 8px; border-radius:4px">88-91% Alerta</span>
+    <span style="background:#FFB347; padding:2px 8px; border-radius:4px">80-87% Urgente</span>
+    <span style="background:#FFC7CE; padding:2px 8px; border-radius:4px">&lt;80% Crítico</span>
 </div>
 """, unsafe_allow_html=True)
