@@ -9,7 +9,7 @@ python generar_seguimiento_metaliados.py >> seguimiento_web\actualizar.log 2>&1
 
 echo [%date% %time%] Subiendo a GitHub...
 cd seguimiento_web
-git add data\seguimiento_metaliados.csv
+git add data\seguimiento_metaliados.csv data\seguimiento_cosechas.csv app.py
 git commit -m "Actualización automática %date%" >> actualizar.log 2>&1
 git push >> actualizar.log 2>&1
 
