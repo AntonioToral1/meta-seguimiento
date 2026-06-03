@@ -276,19 +276,24 @@ def seccion_cosechas(nombre_meta):
     # Métricas generales (fila TOTAL, mes más reciente)
     df_total = df_cos[df_cos['sucursal'] == 'TOTAL']
     if not df_total.empty:
-        ultimo_mes = df_total.sort_values('mes').iloc[-1]
-        penultimo  = df_total.sort_values('mes').iloc[-2] if len(df_total) >= 2 else None
+        df_total_sorted = df_total.sort_values('mes')
+        ultimo_mes = df_total_sorted.iloc[-1]
+        penultimo  = df_total_sorted.iloc[-2] if len(df_total_sorted) >= 2 else None
         delta = (round(ultimo_mes['cosecha_pct'] - penultimo['cosecha_pct'], 1)
                  if penultimo is not None else None)
+        total_saldo   = df_total['monto_colocado'].sum()
+        total_creditos = int(df_total['n_creditos'].sum())
+        periodo_str   = f"{meses_orden[0]} – {meses_orden[-1]}" if meses_orden else ''
         c1, c2, c3 = st.columns(3)
         c1.metric(
             f"Cosecha general ({ultimo_mes['mes']})",
             f"{ultimo_mes['cosecha_pct']:.1f}%",
-            delta=f"{delta:+.1f}pp" if delta is not None else None,
+            delta=f"{delta:+.1f}pp vs mes anterior" if delta is not None else None,
         )
-        c2.metric("Créditos en seguimiento", int(ultimo_mes['n_creditos']))
-        c3.metric("Monto colocado (período)",
-                  f"${ultimo_mes['monto_colocado']:,.0f}")
+        c2.metric("Créditos analizados", total_creditos,
+                  help=f"Total de créditos colocados en el período {periodo_str}")
+        c3.metric(f"Saldo colocado ({periodo_str})",
+                  f"${total_saldo:,.0f}")
 
     st.write("")
 
