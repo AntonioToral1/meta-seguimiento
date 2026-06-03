@@ -277,23 +277,31 @@ def seccion_cosechas(nombre_meta):
     df_total = df_cos[df_cos['sucursal'] == 'TOTAL']
     if not df_total.empty:
         df_total_sorted = df_total.sort_values('mes')
+        total_monto    = df_total['monto_colocado'].sum()
+        total_creditos = int(df_total['n_creditos'].sum())
+        periodo_str    = f"{meses_orden[0]} – {meses_orden[-1]}" if meses_orden else ''
+
+        # Cosecha general = promedio ponderado por monto de los 6 meses
+        cosecha_general = (
+            (df_total['cosecha_pct'] * df_total['monto_colocado']).sum() / total_monto
+            if total_monto > 0 else 0.0
+        )
+        # Delta: mes más reciente vs mes anterior
         ultimo_mes = df_total_sorted.iloc[-1]
         penultimo  = df_total_sorted.iloc[-2] if len(df_total_sorted) >= 2 else None
         delta = (round(ultimo_mes['cosecha_pct'] - penultimo['cosecha_pct'], 1)
                  if penultimo is not None else None)
-        total_saldo   = df_total['monto_colocado'].sum()
-        total_creditos = int(df_total['n_creditos'].sum())
-        periodo_str   = f"{meses_orden[0]} – {meses_orden[-1]}" if meses_orden else ''
+
         c1, c2, c3 = st.columns(3)
         c1.metric(
-            f"Cosecha general ({ultimo_mes['mes']})",
-            f"{ultimo_mes['cosecha_pct']:.1f}%",
-            delta=f"{delta:+.1f}pp vs mes anterior" if delta is not None else None,
+            f"Cosecha general ({periodo_str})",
+            f"{cosecha_general:.1f}%",
+            delta=f"{delta:+.1f}pp último mes" if delta is not None else None,
         )
         c2.metric("Créditos analizados", total_creditos,
                   help=f"Total de créditos colocados en el período {periodo_str}")
         c3.metric(f"Saldo colocado ({periodo_str})",
-                  f"${total_saldo:,.0f}")
+                  f"${total_monto:,.0f}")
 
     st.write("")
 
