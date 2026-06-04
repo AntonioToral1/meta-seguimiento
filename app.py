@@ -92,12 +92,12 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ── Carga de datos ─────────────────────────────────────────────────────────────
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=600)
 def cargar_datos():
     df = pd.read_csv("data/seguimiento_metaliados.csv", low_memory=False)
     return df
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=600)
 def cargar_cosechas():
     try:
         return pd.read_csv("data/seguimiento_cosechas.csv", low_memory=False)
