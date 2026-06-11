@@ -104,8 +104,16 @@ def cargar_cosechas():
     except FileNotFoundError:
         return pd.DataFrame()
 
-df_all    = cargar_datos()
+@st.cache_data(ttl=600)
+def cargar_riesgo():
+    try:
+        return pd.read_csv("data/seguimiento_riesgo.csv", low_memory=False)
+    except FileNotFoundError:
+        return pd.DataFrame()
+
+df_all         = cargar_datos()
 df_cosecha_all = cargar_cosechas()
+df_riesgo_all  = cargar_riesgo()
 
 # Bloques disponibles (ordenados desc para que el más reciente sea primero)
 bloques_disponibles = sorted(df_all['bloque_num'].unique(), reverse=True)
@@ -343,6 +351,57 @@ def seccion_cosechas(nombre_meta):
               }]))
     st.dataframe(styler, use_container_width=True,
                  height=min(400, 50 + len(pivot_fmt) * 35))
+
+    # ── Grupos en riesgo ──────────────────────────────────────────────────────
+    if df_riesgo_all.empty:
+        return
+    df_riesgo_meta = df_riesgo_all[df_riesgo_all['metaliado'] == nombre_meta].copy()
+    if df_riesgo_meta.empty:
+        return
+
+    meses_riesgo = sorted(df_riesgo_meta['mes'].unique(), reverse=True)
+    st.write("")
+    st.markdown(
+        '<div class="seccion-titulo">🔴 Grupos con saldo en riesgo</div>',
+        unsafe_allow_html=True)
+
+    c_sel, c_info = st.columns([2, 5])
+    with c_sel:
+        mes_sel = st.selectbox(
+            'Mes de colocación',
+            meses_riesgo,
+            key=f'riesgo_{nombre_meta}',
+        )
+    df_sel = df_riesgo_meta[df_riesgo_meta['mes'] == mes_sel].copy()
+    with c_info:
+        st.caption(
+            f"{len(df_sel)} crédito{'s' if len(df_sel) != 1 else ''} en riesgo "
+            f"colocados en **{mes_sel}** · "
+            f"saldo en riesgo total: **${df_sel['saldo_riesgo'].sum():,.0f}**"
+        )
+
+    RENAME_R = {
+        'Grupo': 'Grupo', 'Solicitud': 'Solicitud',
+        'Sucursal': 'Sucursal', 'Asesor_Actual': 'Asesor',
+        'Dias_De_Atraso': 'Días Atraso',
+        'moneda_Saldo': 'Saldo', 'moneda_Vencido': 'Saldo Vencido',
+        'saldo_riesgo': 'Saldo en Riesgo', 'moneda_Monto_a_Pagar': 'Monto a Pagar',
+    }
+    show_cols = [c for c in RENAME_R if c in df_sel.columns]
+    df_show = df_sel[show_cols].rename(columns=RENAME_R).copy()
+
+    for col in ['Saldo', 'Saldo Vencido', 'Saldo en Riesgo', 'Monto a Pagar']:
+        if col in df_show.columns:
+            df_show[col] = df_show[col].apply(
+                lambda x: f"${float(x):,.0f}" if pd.notna(x) else '—')
+
+    styler_r = df_show.style.hide(axis='index')
+    if 'Días Atraso' in df_show.columns:
+        styler_r = styler_r.map(colorear_dias, subset=['Días Atraso'])
+
+    st.dataframe(styler_r, use_container_width=True,
+                 height=min(500, 50 + len(df_show) * 36))
+
 
 # ── Tabs por metaliado ─────────────────────────────────────────────────────────
 METALIADOS = ['Brisa', 'Jessy', 'Eder', 'Yessica']
