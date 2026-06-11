@@ -544,11 +544,11 @@ for tab, nombre in zip(tabs, METALIADOS):
                     st.metric('Saldo en goteo', f'${saldo_goteo:,.0f}')
 
                 RENAME_G = {
-                    'Grupo': 'Grupo', 'Solicitud': 'Solicitud',
-                    'Sucursal': 'Sucursal', 'Asesor_Actual': 'Asesor',
-                    'Dias_De_Atraso': 'Días Atraso',
-                    'moneda_Saldo': 'Saldo', 'moneda_Vencido': 'Saldo Vencido',
+                    'Grupo': 'Grupo', 'Sucursal': 'Sucursal',
+                    'Asesor_Actual': 'Asesor', 'Dias_De_Atraso': 'Días Atraso',
                     'Pago Semanal': 'Pago Semanal', 'Falta Sig. Ficha': 'Falta Sig. Ficha',
+                    'moneda_Saldo': 'Saldo', 'moneda_Vencido': 'Saldo Vencido',
+                    'Solicitud': 'Solicitud',
                 }
                 g_cols = [c for c in RENAME_G if c in df_g_show.columns]
                 df_g = df_g_show[g_cols].rename(columns=RENAME_G).copy()
