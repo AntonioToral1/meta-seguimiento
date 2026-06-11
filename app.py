@@ -111,9 +111,17 @@ def cargar_riesgo():
     except FileNotFoundError:
         return pd.DataFrame()
 
+@st.cache_data(ttl=600)
+def cargar_goteo():
+    try:
+        return pd.read_csv("data/seguimiento_goteo.csv", low_memory=False)
+    except FileNotFoundError:
+        return pd.DataFrame()
+
 df_all         = cargar_datos()
 df_cosecha_all = cargar_cosechas()
 df_riesgo_all  = cargar_riesgo()
+df_goteo_all   = cargar_goteo()
 
 # Bloques disponibles (ordenados desc para que el más reciente sea primero)
 bloques_disponibles = sorted(df_all['bloque_num'].unique(), reverse=True)
@@ -490,6 +498,57 @@ for tab, nombre in zip(tabs, METALIADOS):
                     unsafe_allow_html=True)
                 st.caption(f"{len(df_act)} grupos seguidos desde el inicio del bloque")
                 mostrar_tabla(df_act, es_actual=True)
+
+        # ── Goteo ───────────────────────────────────────────────────────────
+        if not df_goteo_all.empty:
+            df_goteo_blq = df_goteo_all[
+                (df_goteo_all['metaliado'] == nombre) &
+                (df_goteo_all['bloque_num'] == bloque_sel)
+            ].copy()
+
+            st.divider()
+            st.markdown(
+                '<div class="seccion-titulo">💧 Goteo del bloque</div>',
+                unsafe_allow_html=True)
+            st.caption(
+                "Grupos que entraron a ≥3 días de atraso durante el bloque "
+                "y NO estaban en ese nivel al inicio.")
+
+            if df_goteo_blq.empty:
+                st.info("Sin goteo en este bloque.")
+            else:
+                cg1, cg2, cg3 = st.columns([2, 2, 4])
+                with cg1:
+                    suc_goteo_opts = ['Todas'] + sorted(
+                        df_goteo_blq['Sucursal'].dropna().unique().tolist())
+                    suc_goteo = st.selectbox(
+                        'Sucursal', suc_goteo_opts, key=f'goteo_suc_{nombre}')
+                df_g_show = (df_goteo_blq if suc_goteo == 'Todas'
+                             else df_goteo_blq[df_goteo_blq['Sucursal'] == suc_goteo])
+                with cg2:
+                    st.metric('Grupos en goteo', len(df_g_show))
+                with cg3:
+                    saldo_goteo = pd.to_numeric(
+                        df_g_show['moneda_Saldo'], errors='coerce').sum()
+                    st.metric('Saldo en goteo', f'${saldo_goteo:,.0f}')
+
+                RENAME_G = {
+                    'Grupo': 'Grupo', 'Solicitud': 'Solicitud',
+                    'Sucursal': 'Sucursal', 'Asesor_Actual': 'Asesor',
+                    'Dias_De_Atraso': 'Días Atraso',
+                    'moneda_Saldo': 'Saldo', 'moneda_Vencido': 'Saldo Vencido',
+                }
+                g_cols = [c for c in RENAME_G if c in df_g_show.columns]
+                df_g = df_g_show[g_cols].rename(columns=RENAME_G).copy()
+                for col in ['Saldo', 'Saldo Vencido']:
+                    if col in df_g.columns:
+                        df_g[col] = df_g[col].apply(
+                            lambda x: f"${float(x):,.0f}" if pd.notna(x) else '—')
+                styler_g = df_g.style.hide(axis='index')
+                if 'Días Atraso' in df_g.columns:
+                    styler_g = styler_g.map(colorear_dias, subset=['Días Atraso'])
+                st.dataframe(styler_g, use_container_width=True,
+                             height=min(500, 50 + len(df_g) * 36))
 
         # ── Cosechas ────────────────────────────────────────────────────────
         st.divider()
