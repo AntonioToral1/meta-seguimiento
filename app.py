@@ -365,19 +365,29 @@ def seccion_cosechas(nombre_meta):
         '<div class="seccion-titulo">🔴 Grupos con saldo en riesgo</div>',
         unsafe_allow_html=True)
 
-    c_sel, c_info = st.columns([2, 5])
-    with c_sel:
+    c_mes, c_suc, c_info = st.columns([2, 2, 4])
+    with c_mes:
         mes_sel = st.selectbox(
             'Mes de colocación',
             meses_riesgo,
-            key=f'riesgo_{nombre_meta}',
+            key=f'riesgo_mes_{nombre_meta}',
         )
     df_sel = df_riesgo_meta[df_riesgo_meta['mes'] == mes_sel].copy()
+    with c_suc:
+        sucursales_disp = ['Todas'] + sorted(df_sel['Sucursal'].dropna().unique().tolist())
+        suc_sel = st.selectbox(
+            'Sucursal',
+            sucursales_disp,
+            key=f'riesgo_suc_{nombre_meta}',
+        )
+    if suc_sel != 'Todas':
+        df_sel = df_sel[df_sel['Sucursal'] == suc_sel].copy()
     with c_info:
         st.caption(
             f"{len(df_sel)} crédito{'s' if len(df_sel) != 1 else ''} en riesgo "
-            f"colocados en **{mes_sel}** · "
-            f"saldo en riesgo total: **${df_sel['saldo_riesgo'].sum():,.0f}**"
+            f"colocados en **{mes_sel}**"
+            + (f" · {suc_sel}" if suc_sel != 'Todas' else '') +
+            f" · saldo en riesgo: **${df_sel['saldo_riesgo'].sum():,.0f}**"
         )
 
     RENAME_R = {
