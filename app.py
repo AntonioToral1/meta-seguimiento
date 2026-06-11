@@ -461,6 +461,17 @@ for tab, nombre in zip(tabs, METALIADOS):
         if df_ini.empty:
             st.info(f"Sin grupos en rango 3-16 días al inicio del bloque {bloque_sel} para {nombre}.")
         else:
+            # Filtro por sucursal (aplica a métricas, buckets y tablas)
+            suc_seg_opts = ['Todas'] + sorted(df_ini['Sucursal'].dropna().unique().tolist())
+            suc_seg = st.selectbox(
+                'Filtrar por sucursal',
+                suc_seg_opts,
+                key=f'suc_seg_{nombre}_{bloque_sel}',
+            )
+            if suc_seg != 'Todas':
+                df_ini = df_ini[df_ini['Sucursal'] == suc_seg].copy()
+                df_act = df_act[df_act['Sucursal'] == suc_seg].copy()
+
             # Métricas de movimiento
             metricas_rapidas(df_act)
             st.write("")
