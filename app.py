@@ -548,10 +548,11 @@ for tab, nombre in zip(tabs, METALIADOS):
                     'Sucursal': 'Sucursal', 'Asesor_Actual': 'Asesor',
                     'Dias_De_Atraso': 'Días Atraso',
                     'moneda_Saldo': 'Saldo', 'moneda_Vencido': 'Saldo Vencido',
+                    'Pago Semanal': 'Pago Semanal', 'Falta Sig. Ficha': 'Falta Sig. Ficha',
                 }
                 g_cols = [c for c in RENAME_G if c in df_g_show.columns]
                 df_g = df_g_show[g_cols].rename(columns=RENAME_G).copy()
-                for col in ['Saldo', 'Saldo Vencido']:
+                for col in ['Saldo', 'Saldo Vencido', 'Pago Semanal', 'Falta Sig. Ficha']:
                     if col in df_g.columns:
                         df_g[col] = df_g[col].apply(
                             lambda x: f"${float(x):,.0f}" if pd.notna(x) else '—')
