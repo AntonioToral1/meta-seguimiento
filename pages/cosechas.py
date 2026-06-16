@@ -40,6 +40,10 @@ MESES_ORDEN = {
     'Enero':1,'Febrero':2,'Marzo':3,'Abril':4,'Mayo':5,'Junio':6,
     'Julio':7,'Agosto':8,'Septiembre':9,'Octubre':10,'Noviembre':11,'Diciembre':12
 }
+MESES_ABREV = {
+    'Enero':'Ene','Febrero':'Feb','Marzo':'Mar','Abril':'Abr','Mayo':'May','Junio':'Jun',
+    'Julio':'Jul','Agosto':'Ago','Septiembre':'Sep','Octubre':'Oct','Noviembre':'Nov','Diciembre':'Dic'
+}
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def semaforo_color(v):
@@ -199,27 +203,24 @@ with tab2:
 
     suc_sel = st.selectbox('Sucursal', ['Todas las sucursales'] + sucursales, key='suc_mes')
 
-    meses_disp = sorted(df_rm['mes_nombre'].dropna().unique(),
-                        key=lambda m: MESES_ORDEN.get(m, 99))
+    # Etiqueta "Ene 2026" para cada combinación año+mes
+    df_rm = df_rm.copy()
+    df_rm['periodo'] = df_rm.apply(
+        lambda r: f"{MESES_ABREV.get(r['mes_nombre'], r['mes_nombre'][:3])} {int(r['anio_num'])}",
+        axis=1
+    )
+
+    # Orden cronológico de periodos
+    periodos_orden = (df_rm[['anio_num','mes_num','periodo']]
+                      .drop_duplicates()
+                      .sort_values(['anio_num','mes_num'])['periodo']
+                      .tolist())
+    periodos_disp = list(dict.fromkeys(periodos_orden))  # deduplica manteniendo orden
 
     if suc_sel == 'Todas las sucursales':
-        df_plot = df_rm.groupby(['bloque', 'fecha', 'mes_nombre', 'mes_num']).apply(
-            lambda x: pd.Series({
-                'cosecha': (x['pagado'].sum() - x['saldo_riesgo'].sum() + 0) /
-                           x['capital'].sum() if x['capital'].sum() > 0 else np.nan,
-                # Recalcular correctamente
-                'capital': x['capital'].sum(),
-                'pagado': x['pagado'].sum(),
-                'saldo_riesgo': x['saldo_riesgo'].sum(),
-                'n_creditos': x['n_creditos'].sum(),
-            })
-        ).reset_index()
-        # Recalcular cosecha con saldo=0 (no disponible en monthly agg)
-        # Usamos la aproximación: cosecha = pagado / (capital + saldo implícito)
-        # Mejor: usar la cosecha ponderada por capital
         df_plot2 = df_rm.copy()
         df_plot2['peso_cos'] = df_plot2['cosecha'] * df_plot2['capital']
-        df_plot_agg = df_plot2.groupby(['bloque', 'fecha', 'mes_nombre', 'mes_num']).agg(
+        df_plot_agg = df_plot2.groupby(['bloque', 'fecha', 'anio_num', 'mes_num', 'periodo']).agg(
             peso_cos=('peso_cos', 'sum'),
             capital=('capital', 'sum'),
             n_creditos=('n_creditos', 'sum'),
@@ -234,7 +235,7 @@ with tab2:
         df_plot = df_rm[df_rm['sucursal'] == suc_sel].copy()
         titulo_graf = f'{suc_sel} — {region_sel}'
 
-    # Gráfica: una línea por mes
+    # Gráfica: una línea por periodo (Ene 2026, Feb 2026, …)
     fig2, ax2 = plt.subplots(figsize=(12, 5))
     fig2.patch.set_facecolor('white')
     ax2.set_facecolor('#FAFAFA')
@@ -242,8 +243,8 @@ with tab2:
     cmap = matplotlib.colormaps.get_cmap('tab10')
     xs2 = list(range(len(bloques_ventana)))
 
-    for i, mes in enumerate(meses_disp):
-        df_m = df_plot[df_plot['mes_nombre'] == mes]
+    for i, periodo in enumerate(periodos_disp):
+        df_m = df_plot[df_plot['periodo'] == periodo]
         if df_m.empty:
             continue
         color = cmap(i % 10)
@@ -257,7 +258,7 @@ with tab2:
         ys2_v = [y for y, m2 in zip(ys2, mask2) if m2]
         if xs2_v:
             ax2.plot(xs2_v, ys2_v, marker='o', linewidth=1.8, markersize=5,
-                     color=color, label=mes, alpha=0.9)
+                     color=color, label=periodo, alpha=0.9)
             ax2.annotate(f'{ys2_v[-1]:.0%}',
                          (xs2_v[-1], ys2_v[-1]),
                          textcoords='offset points', xytext=(6, 0),
@@ -276,11 +277,11 @@ with tab2:
     st.pyplot(fig2)
     plt.close()
 
-    # Tabla: mes × bloque para la sucursal seleccionada
+    # Tabla: periodo × bloque
     st.markdown('**Tabla: cosecha por mes de colocación y bloque**')
-    pivot2 = df_plot.pivot_table(index='mes_nombre', columns='bloque',
+    pivot2 = df_plot.pivot_table(index='periodo', columns='bloque',
                                   values='cosecha', aggfunc='first')
-    pivot2 = pivot2.reindex(index=meses_disp, columns=bloques_ventana)
+    pivot2 = pivot2.reindex(index=periodos_disp, columns=bloques_ventana)
     pivot2_display = pivot2.map(lambda v: fmt_pct(v) if not pd.isna(v) else '—')
     st.dataframe(pivot2_display, use_container_width=True)
 
