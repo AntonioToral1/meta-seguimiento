@@ -128,17 +128,26 @@ with tab1:
     st.subheader(f'Cosecha general por bloque — {region_sel}')
     st.caption('Créditos incluidos: todos los colocados en los últimos 6 meses a cada fecha de corte')
 
+    suc_filtro = st.multiselect(
+        'Sucursales a mostrar', sucursales, default=sucursales, key='suc_filtro'
+    )
+    if not suc_filtro:
+        st.info('Selecciona al menos una sucursal.')
+        st.stop()
+
+    df_r_f = df_r[df_r['sucursal'].isin(suc_filtro)]
+
     # Gráfica
     fig, ax = plt.subplots(figsize=(12, 5))
     fig.patch.set_facecolor('white')
     ax.set_facecolor('#FAFAFA')
 
     xs = list(range(len(bloques_ventana)))
-    for i, suc in enumerate(sucursales):
+    for i, suc in enumerate(suc_filtro):
         color = COLORES_SUC[i % len(COLORES_SUC)]
         ys = []
         for b in bloques_ventana:
-            row = df_r[(df_r['bloque'] == b) & (df_r['sucursal'] == suc)]
+            row = df_r_f[(df_r_f['bloque'] == b) & (df_r_f['sucursal'] == suc)]
             ys.append(row.iloc[0]['cosecha'] if not row.empty else np.nan)
 
         mask = [not pd.isna(y) for y in ys]
@@ -163,9 +172,9 @@ with tab1:
     ax.grid(True, color='#E0E0E0', linewidth=0.8)
     ax.grid(True, which='minor', color='#E0E0E0', linewidth=0.4, linestyle=':')
     ax.legend(loc='lower left', fontsize=9, framealpha=0.9, ncol=3)
-    ax.set_ylim(bottom=max(0, min([y for ys in [[df_r[(df_r['bloque']==b)&(df_r['sucursal']==s)]['cosecha'].values[0]
-                                                   if not df_r[(df_r['bloque']==b)&(df_r['sucursal']==s)].empty else np.nan
-                                                   for b in bloques_ventana] for s in sucursales] for y in ys
+    ax.set_ylim(bottom=max(0, min([y for ys in [[df_r_f[(df_r_f['bloque']==b)&(df_r_f['sucursal']==s)]['cosecha'].values[0]
+                                                   if not df_r_f[(df_r_f['bloque']==b)&(df_r_f['sucursal']==s)].empty else np.nan
+                                                   for b in bloques_ventana] for s in suc_filtro] for y in ys
                                     if not pd.isna(y)], default=0.7) - 0.03),
                top=1.02)
     ax.set_title(f'Cosecha General — {region_sel}', fontsize=11,
@@ -176,8 +185,8 @@ with tab1:
 
     # Tabla resumen rápido
     st.markdown('**Tabla: cosecha general por sucursal y bloque**')
-    pivot = df_r.pivot_table(index='sucursal', columns='bloque',
-                              values='cosecha', aggfunc='first')
+    pivot = df_r_f.pivot_table(index='sucursal', columns='bloque',
+                               values='cosecha', aggfunc='first')
     pivot = pivot.reindex(columns=bloques_ventana)
     pivot_display = pivot.map(lambda v: fmt_pct(v) if not pd.isna(v) else '—')
     st.dataframe(pivot_display, use_container_width=True)
