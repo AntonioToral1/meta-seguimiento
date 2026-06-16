@@ -178,7 +178,7 @@ with tab1:
     pivot = df_r.pivot_table(index='sucursal', columns='bloque',
                               values='cosecha', aggfunc='first')
     pivot = pivot.reindex(columns=bloques_ventana)
-    pivot_display = pivot.applymap(lambda v: fmt_pct(v) if not pd.isna(v) else '—')
+    pivot_display = pivot.map(lambda v: fmt_pct(v) if not pd.isna(v) else '—')
     st.dataframe(pivot_display, use_container_width=True)
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -271,7 +271,7 @@ with tab2:
     pivot2 = df_plot.pivot_table(index='mes_nombre', columns='bloque',
                                   values='cosecha', aggfunc='first')
     pivot2 = pivot2.reindex(index=meses_disp, columns=bloques_ventana)
-    pivot2_display = pivot2.applymap(lambda v: fmt_pct(v) if not pd.isna(v) else '—')
+    pivot2_display = pivot2.map(lambda v: fmt_pct(v) if not pd.isna(v) else '—')
     st.dataframe(pivot2_display, use_container_width=True)
 
 # ═══════════════════════════════════════════════════════════════════════════════
