@@ -11,7 +11,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from pathlib import Path
-from datetime import date
+from datetime import date, timedelta
 
 st.set_page_config(
     page_title='Cosechas | Meta Financiera',
@@ -123,7 +123,7 @@ for i, suc in enumerate(sucursales):
 st.markdown('---')
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
-tab1, tab2, tab3 = st.tabs(['📈 Evolución General', '📅 Por Mes de Colocación', '📊 Tabla Detalle'])
+tab1, tab2, tab3, tab4 = st.tabs(['📈 Evolución General', '📅 Por Mes de Colocación', '📊 Tabla Detalle', '🗓️ Calendario de Bloques'])
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Tab 1: Evolución General
@@ -327,3 +327,41 @@ with tab3:
 
     st.markdown('---')
     st.caption('🟢 ≥ 95%  ·  🟡 ≥ 85%  ·  🔴 < 85%  ·  ⚪ Sin datos')
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Tab 4: Calendario de Bloques
+# ═══════════════════════════════════════════════════════════════════════════════
+with tab4:
+    st.subheader('🗓️ Calendario de Bloques')
+    st.caption('Inicio de cada bloque = lunes · Duración: 14 días · Referencia: B1 = 5 ene 2026')
+
+    INICIO_B1 = date(2026, 1, 5)
+
+    # Construir tabla con todos los bloques disponibles en el dataset completo
+    bloques_todos = orden_bloques(df_gen)
+    snap_por_bloque = df_gen.groupby('bloque')['fecha'].first().to_dict()
+
+    filas_cal = []
+    for b in bloques_todos:
+        if b == 'Hoy':
+            snap = snap_por_bloque.get('Hoy', pd.NaT)
+            filas_cal.append({
+                'Bloque': 'Hoy',
+                'Inicio del bloque': '—',
+                'Fin del bloque': '—',
+                'Snapshot usado': str(snap.date()) if pd.notna(snap) else '—',
+            })
+        else:
+            n = int(b[1:])
+            ini = INICIO_B1 + timedelta(days=(n - 1) * 14)
+            fin = ini + timedelta(days=13)
+            snap = snap_por_bloque.get(b, pd.NaT)
+            filas_cal.append({
+                'Bloque': b,
+                'Inicio del bloque': ini.strftime('%d %b %Y'),
+                'Fin del bloque': fin.strftime('%d %b %Y'),
+                'Snapshot usado': str(snap.date()) if pd.notna(snap) else '—',
+            })
+
+    df_cal = pd.DataFrame(filas_cal)
+    st.dataframe(df_cal, use_container_width=True, hide_index=True)
