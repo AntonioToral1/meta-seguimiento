@@ -1,6 +1,7 @@
 """
 Cosechas por región — últimos 6 meses (rolling window).
 Página Streamlit del seguimiento Meta Financiera.
+v2: Salamanca → Suc. Digital
 """
 import streamlit as st
 import pandas as pd
