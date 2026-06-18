@@ -201,7 +201,8 @@ with tab1:
 with tab2:
     st.subheader(f'Cosecha por mes de colocación — {region_sel}')
 
-    suc_sel = st.selectbox('Sucursal', ['Todas las sucursales'] + sucursales, key='suc_mes')
+    col_suc, col_mes = st.columns([1, 2])
+    suc_sel = col_suc.selectbox('Sucursal', ['Todas las sucursales'] + sucursales, key='suc_mes')
 
     # Etiqueta "Ene 2026" para cada combinación año+mes
     df_rm = df_rm.copy()
@@ -216,6 +217,13 @@ with tab2:
                       .sort_values(['anio_num','mes_num'])['periodo']
                       .tolist())
     periodos_disp = list(dict.fromkeys(periodos_orden))  # deduplica manteniendo orden
+
+    periodos_sel = col_mes.multiselect(
+        'Meses de colocación a mostrar', periodos_disp, default=periodos_disp, key='periodos_sel'
+    )
+    if not periodos_sel:
+        st.info('Selecciona al menos un mes de colocación.')
+        st.stop()
 
     if suc_sel == 'Todas las sucursales':
         df_plot2 = df_rm.copy()
@@ -234,6 +242,10 @@ with tab2:
     else:
         df_plot = df_rm[df_rm['sucursal'] == suc_sel].copy()
         titulo_graf = f'{suc_sel} — {region_sel}'
+
+    # Aplicar filtro de meses seleccionados
+    df_plot  = df_plot[df_plot['periodo'].isin(periodos_sel)]
+    periodos_disp = [p for p in periodos_disp if p in periodos_sel]
 
     # Gráfica: una línea por periodo (Ene 2026, Feb 2026, …)
     fig2, ax2 = plt.subplots(figsize=(12, 5))
