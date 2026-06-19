@@ -1,6 +1,6 @@
 """
 Seguimiento de cartera 3-16 días — Metaliados
-Dashboard para Brisa, Jessy, Eder y Yessica.
+Dashboard para Marisol, Jessy, Eder y Yessica.
 """
 import streamlit as st
 import pandas as pd
@@ -422,7 +422,7 @@ def seccion_cosechas(nombre_meta):
 
 
 # ── Tabs por metaliado ─────────────────────────────────────────────────────────
-METALIADOS = ['Brisa', 'Jessy', 'Eder', 'Yessica']
+METALIADOS = ['Marisol', 'Jessy', 'Eder', 'Yessica']
 tabs = st.tabs([f"👤 {m}" for m in METALIADOS])
 
 for tab, nombre in zip(tabs, METALIADOS):
