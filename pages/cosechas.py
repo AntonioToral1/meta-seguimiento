@@ -1,6 +1,7 @@
 """
 Cosechas por región — últimos 6 meses (rolling window).
 Página Streamlit del seguimiento Meta Financiera.
+Saldo en riesgo: 0-2d=vencido, 3+d=saldo completo. (2026-06-23)
 v2: Salamanca → Suc. Digital
 """
 import streamlit as st

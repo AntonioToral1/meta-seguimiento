@@ -1,6 +1,7 @@
 """
 Seguimiento de cartera 3-16 días — Metaliados
 Dashboard para Marisol, Jessy, Eder y Yessica.
+Saldo en riesgo: 0-2d=vencido, 3+d=saldo completo. (2026-06-23)
 """
 import streamlit as st
 import pandas as pd
