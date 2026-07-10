@@ -1,6 +1,7 @@
 """
 Seguimiento de cartera 3-16 días — Metaliados
-Dashboard para Marisol, Jessy, Eder y Yessica.
+Dashboard para Marisol, Jessy, Eder y Yessica, más una pestaña Nacional
+con el agregado de las sucursales de los 4 metaliados combinadas.
 Saldo en riesgo: 0-2d=vencido, 3+d=saldo completo. (2026-06-23)
 """
 import streamlit as st
@@ -422,9 +423,10 @@ def seccion_cosechas(nombre_meta):
                  height=min(500, 50 + len(df_show) * 36))
 
 
-# ── Tabs por metaliado ─────────────────────────────────────────────────────────
-METALIADOS = ['Marisol', 'Jessy', 'Eder', 'Yessica']
-tabs = st.tabs([f"👤 {m}" for m in METALIADOS])
+# ── Tabs: Nacional + por metaliado ──────────────────────────────────────────────
+METALIADOS = ['Nacional', 'Marisol', 'Jessy', 'Eder', 'Yessica']
+ICONOS = {'Nacional': '🌎'}
+tabs = st.tabs([f"{ICONOS.get(m, '👤')} {m}" for m in METALIADOS])
 
 for tab, nombre in zip(tabs, METALIADOS):
     with tab:
