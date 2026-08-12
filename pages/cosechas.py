@@ -31,6 +31,13 @@ def cargar_datos():
 
 df_gen, df_men = cargar_datos()
 
+# Compatibilidad con CSVs generados antes de agregar la columna 'categoria'.
+if 'categoria' not in df_gen.columns:
+    df_gen['categoria'] = 'Todas'
+    df_men['categoria'] = 'Todas'
+
+CATEGORIAS = ['Todas', 'Individual', 'Grupal', 'Empresarial']
+
 REGIONES = sorted(df_gen['region'].unique())
 COLORES_SUC = [
     '#2E75B6', '#ED7D31', '#70AD47', '#FFC000',
@@ -96,11 +103,23 @@ NIVELES = ['Nacional'] + REGIONES
 region_sel = st.sidebar.radio('Nivel / Región', NIVELES, index=0)
 es_nacional = region_sel == 'Nacional'
 
+st.sidebar.markdown('---')
+categoria_sel = st.sidebar.radio(
+    'Tipo de crédito', CATEGORIAS, index=0,
+    help='Empresarial = crédito Grupal con 3 integrantes (avales). "Todas" incluye Individual + Grupal + Empresarial.',
+)
+es_categoria_filtrada = categoria_sel != 'Todas'
+
+# Filtrar por tipo de crédito ANTES de todo lo demás — el resto de la página (Nacional,
+# por región, por sucursal, por mes) reusa exactamente la misma lógica sin más cambios.
+df_gen_cat = df_gen[df_gen['categoria'] == categoria_sel]
+df_men_cat = df_men[df_men['categoria'] == categoria_sel]
+
 # Ventana de bloques (últimos 6 meses)
-fecha_max = df_gen['fecha'].max()
+fecha_max = df_gen_cat['fecha'].max()
 fecha_min_ventana = fecha_max - pd.DateOffset(months=6)
-df_gen_v = df_gen[df_gen['fecha'] >= fecha_min_ventana].copy()
-df_men_v = df_men[df_men['fecha'] >= fecha_min_ventana].copy()
+df_gen_v = df_gen_cat[df_gen_cat['fecha'] >= fecha_min_ventana].copy()
+df_men_v = df_men_cat[df_men_cat['fecha'] >= fecha_min_ventana].copy()
 
 bloques_ventana = orden_bloques(df_gen_v)
 st.sidebar.markdown('---')
@@ -129,11 +148,11 @@ else:
 sucursales = sorted(df_r['sucursal'].unique())
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.title(f'🌾 Cosechas — {region_sel}')
-if es_nacional:
-    st.caption(f'Todas las regiones · Créditos colocados en los últimos 6 meses · Corte: {fecha_max.date()}')
-else:
-    st.caption(f'Créditos colocados en los últimos 6 meses · Corte: {fecha_max.date()}')
+titulo_categoria = f' · {categoria_sel}' if es_categoria_filtrada else ''
+st.title(f'🌾 Cosechas — {region_sel}{titulo_categoria}')
+ambito = 'Todas las regiones · ' if es_nacional else ''
+tipo_credito_cap = f'Tipo de crédito: {categoria_sel} · ' if es_categoria_filtrada else ''
+st.caption(f'{ambito}{tipo_credito_cap}Créditos colocados en los últimos 6 meses · Corte: {fecha_max.date()}')
 
 # ── Métricas rápidas (último corte) ───────────────────────────────────────────
 ultimo_bloque = bloques_ventana[-1]
