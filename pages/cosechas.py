@@ -37,6 +37,9 @@ COLORES_SUC = [
     '#7030A0', '#00B0F0', '#FF0000', '#92D050',
 ]
 
+META_OPTIMA = 0.96   # antes 0.95 — umbral verde / línea de meta en toda la página
+UMBRAL_ATENCION = 0.85
+
 MESES_ORDEN = {
     'Enero':1,'Febrero':2,'Marzo':3,'Abril':4,'Mayo':5,'Junio':6,
     'Julio':7,'Agosto':8,'Septiembre':9,'Octubre':10,'Noviembre':11,'Diciembre':12
@@ -48,15 +51,15 @@ MESES_ABREV = {
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def semaforo_color(v):
-    if pd.isna(v):     return '#CCCCCC'
-    if v >= 0.95:      return '#70AD47'
-    if v >= 0.85:      return '#FFC000'
+    if pd.isna(v):          return '#CCCCCC'
+    if v >= META_OPTIMA:    return '#70AD47'
+    if v >= UMBRAL_ATENCION: return '#FFC000'
     return '#FF0000'
 
 def semaforo_emoji(v):
-    if pd.isna(v):  return '⚪'
-    if v >= 0.95:   return '🟢'
-    if v >= 0.85:   return '🟡'
+    if pd.isna(v):          return '⚪'
+    if v >= META_OPTIMA:    return '🟢'
+    if v >= UMBRAL_ATENCION: return '🟡'
     return '🔴'
 
 def fmt_pct(v):
@@ -221,8 +224,8 @@ with tab1:
                         fontweight='bold')
 
     # Líneas de referencia
-    ax.axhline(0.95, color='#70AD47', linewidth=1, linestyle='--', alpha=0.6, label='95% (meta)')
-    ax.axhline(0.85, color='#FFC000', linewidth=1, linestyle='--', alpha=0.6, label='85% (atención)')
+    ax.axhline(META_OPTIMA, color='#70AD47', linewidth=1, linestyle='--', alpha=0.6, label=f'{META_OPTIMA:.0%} (óptima)')
+    ax.axhline(UMBRAL_ATENCION, color='#FFC000', linewidth=1, linestyle='--', alpha=0.6, label=f'{UMBRAL_ATENCION:.0%} (atención)')
 
     ax.set_xticks(xs)
     ax.set_xticklabels(bloques_ventana, fontsize=9)
@@ -332,8 +335,8 @@ with tab2:
                          textcoords='offset points', xytext=(6, 0),
                          fontsize=7.5, color=color)
 
-    ax2.axhline(0.95, color='#70AD47', linewidth=1, linestyle='--', alpha=0.5)
-    ax2.axhline(0.85, color='#FFC000', linewidth=1, linestyle='--', alpha=0.5)
+    ax2.axhline(META_OPTIMA, color='#70AD47', linewidth=1, linestyle='--', alpha=0.5)
+    ax2.axhline(UMBRAL_ATENCION, color='#FFC000', linewidth=1, linestyle='--', alpha=0.5)
     ax2.set_xticks(xs2)
     ax2.set_xticklabels(bloques_ventana, fontsize=9)
     ax2.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1, decimals=0))
@@ -394,7 +397,7 @@ with tab3:
     c4.metric(f'Cosecha {region_sel}', fmt_pct(cos_ponderada))
 
     st.markdown('---')
-    st.caption('🟢 ≥ 95%  ·  🟡 ≥ 85%  ·  🔴 < 85%  ·  ⚪ Sin datos')
+    st.caption(f'🟢 ≥ {META_OPTIMA:.0%}  ·  🟡 ≥ {UMBRAL_ATENCION:.0%}  ·  🔴 < {UMBRAL_ATENCION:.0%}  ·  ⚪ Sin datos')
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Tab 4: Calendario de Bloques
