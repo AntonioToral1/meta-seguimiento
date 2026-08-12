@@ -115,6 +115,13 @@ es_categoria_filtrada = categoria_sel != 'Todas'
 df_gen_cat = df_gen[df_gen['categoria'] == categoria_sel]
 df_men_cat = df_men[df_men['categoria'] == categoria_sel]
 
+if df_gen_cat.empty:
+    st.error(
+        f"No hay datos para el tipo de crédito '{categoria_sel}'. Si acabas de actualizar "
+        "la app, puede ser caché desactualizado — recarga la página (o espera un minuto)."
+    )
+    st.stop()
+
 # Ventana de bloques (últimos 6 meses)
 fecha_max = df_gen_cat['fecha'].max()
 fecha_min_ventana = fecha_max - pd.DateOffset(months=6)
@@ -122,6 +129,12 @@ df_gen_v = df_gen_cat[df_gen_cat['fecha'] >= fecha_min_ventana].copy()
 df_men_v = df_men_cat[df_men_cat['fecha'] >= fecha_min_ventana].copy()
 
 bloques_ventana = orden_bloques(df_gen_v)
+if not bloques_ventana:
+    st.error(
+        "No hay bloques con datos en la ventana de los últimos 6 meses para esta "
+        "combinación de filtros. Recarga la página; si sigue pasando, avisa."
+    )
+    st.stop()
 st.sidebar.markdown('---')
 st.sidebar.caption(f'Ventana: últimos 6 meses  \n'
                    f'{fecha_min_ventana.date()} → {fecha_max.date()}  \n'
