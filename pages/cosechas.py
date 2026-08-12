@@ -69,9 +69,29 @@ def orden_bloques(df):
         return int(b[1:]) if b[1:].isdigit() else 0
     return sorted(df['bloque'].unique(), key=key)
 
+def agregar_por_region(df, group_cols):
+    """Colapsa sucursales -> una fila por región, sumando capital/pagado/saldo_riesgo y
+    reponderando 'cosecha' por capital. Matemáticamente equivalente a recomputar la cosecha
+    desde los componentes crudos (Saldo/Pagado/Saldo en riesgo), porque
+    capital_i × cosecha_i = numerador_i de la fórmula de cosecha de cada sucursal — sumar
+    esos numeradores y dividir entre el capital total da la cosecha agregada correcta."""
+    df = df.copy()
+    df['_peso_cos'] = df['cosecha'] * df['capital']
+    g = df.groupby(group_cols + ['region']).agg(
+        n_creditos=('n_creditos', 'sum'),
+        capital=('capital', 'sum'),
+        pagado=('pagado', 'sum'),
+        saldo_riesgo=('saldo_riesgo', 'sum'),
+        peso_cos=('_peso_cos', 'sum'),
+    ).reset_index()
+    g['cosecha'] = np.where(g['capital'] > 0, g['peso_cos'] / g['capital'], np.nan)
+    return g.drop(columns='peso_cos')
+
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.title('🌾 Cosechas')
-region_sel = st.sidebar.radio('Región', REGIONES, index=0)
+NIVELES = ['Nacional'] + REGIONES
+region_sel = st.sidebar.radio('Nivel / Región', NIVELES, index=0)
+es_nacional = region_sel == 'Nacional'
 
 # Ventana de bloques (últimos 6 meses)
 fecha_max = df_gen['fecha'].max()
@@ -85,18 +105,33 @@ st.sidebar.caption(f'Ventana: últimos 6 meses  \n'
                    f'{fecha_min_ventana.date()} → {fecha_max.date()}  \n'
                    f'Bloques: {bloques_ventana[0]} – {bloques_ventana[-1]}')
 
-# ── Filtrar región ─────────────────────────────────────────────────────────────
-df_r = df_gen_v[df_gen_v['region'] == region_sel].copy()
-df_rm = df_men_v[df_men_v['region'] == region_sel].copy()
+# ── Filtrar región (o agregar a nivel Nacional) ────────────────────────────────
+if es_nacional:
+    # Nivel Nacional: cada "sucursal" de aquí en adelante es en realidad una región —
+    # se colapsan las sucursales dentro de cada región, reusando las mismas 4 pestañas.
+    df_r = agregar_por_region(df_gen_v, ['bloque', 'fecha']).rename(columns={'region': 'sucursal'})
+    df_rm = agregar_por_region(df_men_v, ['bloque', 'fecha', 'anio_num', 'mes_num', 'mes_nombre']).rename(columns={'region': 'sucursal'})
+else:
+    df_r = df_gen_v[df_gen_v['region'] == region_sel].copy()
+    df_rm = df_men_v[df_men_v['region'] == region_sel].copy()
 sucursales = sorted(df_r['sucursal'].unique())
 
 # ── Header ────────────────────────────────────────────────────────────────────
 st.title(f'🌾 Cosechas — {region_sel}')
-st.caption(f'Créditos colocados en los últimos 6 meses · Corte: {fecha_max.date()}')
+if es_nacional:
+    st.caption(f'Todas las regiones · Créditos colocados en los últimos 6 meses · Corte: {fecha_max.date()}')
+else:
+    st.caption(f'Créditos colocados en los últimos 6 meses · Corte: {fecha_max.date()}')
 
 # ── Métricas rápidas (último corte) ───────────────────────────────────────────
 ultimo_bloque = bloques_ventana[-1]
 df_ult = df_r[df_r['bloque'] == ultimo_bloque]
+
+if es_nacional:
+    _cap_tot = df_ult['capital'].sum()
+    _v_nacional = (df_ult['cosecha'] * df_ult['capital']).sum() / _cap_tot if _cap_tot > 0 else np.nan
+    st.metric(f'{semaforo_emoji(_v_nacional)}  🇲🇽 Cosecha Nacional (todas las regiones)', fmt_pct(_v_nacional))
+    st.markdown('##### Desglose por región')
 
 cols_met = st.columns(len(sucursales))
 for i, suc in enumerate(sucursales):
@@ -134,10 +169,11 @@ with tab1:
     st.caption('Créditos incluidos: todos los colocados en los últimos 6 meses a cada fecha de corte')
 
     suc_filtro = st.multiselect(
-        'Sucursales a mostrar', sucursales, default=sucursales, key='suc_filtro'
+        'Regiones a mostrar' if es_nacional else 'Sucursales a mostrar',
+        sucursales, default=sucursales, key='suc_filtro'
     )
     if not suc_filtro:
-        st.info('Selecciona al menos una sucursal.')
+        st.info('Selecciona al menos una región.' if es_nacional else 'Selecciona al menos una sucursal.')
         st.stop()
 
     df_r_f = df_r[df_r['sucursal'].isin(suc_filtro)]
@@ -203,7 +239,8 @@ with tab2:
     st.subheader(f'Cosecha por mes de colocación — {region_sel}')
 
     col_suc, col_mes = st.columns([1, 2])
-    suc_sel = col_suc.selectbox('Sucursal', ['Todas las sucursales'] + sucursales, key='suc_mes')
+    etiqueta_unidad = 'Todas las regiones' if es_nacional else 'Todas las sucursales'
+    suc_sel = col_suc.selectbox('Región' if es_nacional else 'Sucursal', [etiqueta_unidad] + sucursales, key='suc_mes')
 
     # Etiqueta "Ene 2026" para cada combinación año+mes
     df_rm = df_rm.copy()
@@ -226,7 +263,7 @@ with tab2:
         st.info('Selecciona al menos un mes de colocación.')
         st.stop()
 
-    if suc_sel == 'Todas las sucursales':
+    if suc_sel == etiqueta_unidad:
         df_plot2 = df_rm.copy()
         df_plot2['peso_cos'] = df_plot2['cosecha'] * df_plot2['capital']
         df_plot_agg = df_plot2.groupby(['bloque', 'fecha', 'anio_num', 'mes_num', 'periodo']).agg(
@@ -239,7 +276,7 @@ with tab2:
             df_plot_agg['peso_cos'] / df_plot_agg['capital'],
             np.nan)
         df_plot = df_plot_agg
-        titulo_graf = f'Todas las sucursales — {region_sel}'
+        titulo_graf = f'{etiqueta_unidad} — {region_sel}'
     else:
         df_plot = df_rm[df_rm['sucursal'] == suc_sel].copy()
         titulo_graf = f'{suc_sel} — {region_sel}'
@@ -315,7 +352,7 @@ with tab3:
     tabla_det = df_det[['semaforo', 'sucursal', 'n_creditos',
                          'capital_fmt', 'pagado_fmt', 'sr_fmt', 'cosecha_fmt']].rename(columns={
         'semaforo': '',
-        'sucursal': 'Sucursal',
+        'sucursal': 'Región' if es_nacional else 'Sucursal',
         'n_creditos': 'Créditos',
         'capital_fmt': 'Monto a Pagar',
         'pagado_fmt': 'Pagado',
