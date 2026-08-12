@@ -105,12 +105,21 @@ st.sidebar.caption(f'Ventana: últimos 6 meses  \n'
                    f'{fecha_min_ventana.date()} → {fecha_max.date()}  \n'
                    f'Bloques: {bloques_ventana[0]} – {bloques_ventana[-1]}')
 
+TOTAL_NACIONAL_LABEL = '🇲🇽 TOTAL NACIONAL'
+
 # ── Filtrar región (o agregar a nivel Nacional) ────────────────────────────────
 if es_nacional:
     # Nivel Nacional: cada "sucursal" de aquí en adelante es en realidad una región —
     # se colapsan las sucursales dentro de cada región, reusando las mismas 4 pestañas.
     df_r = agregar_por_region(df_gen_v, ['bloque', 'fecha']).rename(columns={'region': 'sucursal'})
     df_rm = agregar_por_region(df_men_v, ['bloque', 'fecha', 'anio_num', 'mes_num', 'mes_nombre']).rename(columns={'region': 'sucursal'})
+
+    # Línea consolidada Nacional (todas las regiones juntas, una sola serie) — se agrega
+    # SOLO para graficar en la pestaña de Evolución (tab1); no se mezcla con df_r/df_rm que
+    # usan tab2/tab3, para no duplicar el total al sumar capital ahí.
+    df_r_nac_total = agregar_por_region(
+        df_gen_v.assign(region=TOTAL_NACIONAL_LABEL), ['bloque', 'fecha']
+    ).rename(columns={'region': 'sucursal'})
 else:
     df_r = df_gen_v[df_gen_v['region'] == region_sel].copy()
     df_rm = df_men_v[df_men_v['region'] == region_sel].copy()
@@ -168,15 +177,20 @@ with tab1:
     st.subheader(f'Cosecha general por bloque — {region_sel}')
     st.caption('Créditos incluidos: todos los colocados en los últimos 6 meses a cada fecha de corte')
 
+    # A nivel Nacional se puede agregar la línea consolidada (todas las regiones juntas)
+    # a la misma gráfica, además del desglose por región.
+    opciones_tab1 = sucursales + [TOTAL_NACIONAL_LABEL] if es_nacional else sucursales
     suc_filtro = st.multiselect(
         'Regiones a mostrar' if es_nacional else 'Sucursales a mostrar',
-        sucursales, default=sucursales, key='suc_filtro'
+        opciones_tab1, default=opciones_tab1, key='suc_filtro'
     )
     if not suc_filtro:
         st.info('Selecciona al menos una región.' if es_nacional else 'Selecciona al menos una sucursal.')
         st.stop()
 
     df_r_f = df_r[df_r['sucursal'].isin(suc_filtro)]
+    if es_nacional and TOTAL_NACIONAL_LABEL in suc_filtro:
+        df_r_f = pd.concat([df_r_f, df_r_nac_total[df_r_nac_total['bloque'].isin(bloques_ventana)]], ignore_index=True)
 
     # Gráfica
     fig, ax = plt.subplots(figsize=(12, 5))
@@ -185,7 +199,8 @@ with tab1:
 
     xs = list(range(len(bloques_ventana)))
     for i, suc in enumerate(suc_filtro):
-        color = COLORES_SUC[i % len(COLORES_SUC)]
+        es_total = suc == TOTAL_NACIONAL_LABEL
+        color = '#1F1F1F' if es_total else COLORES_SUC[i % len(COLORES_SUC)]
         ys = []
         for b in bloques_ventana:
             row = df_r_f[(df_r_f['bloque'] == b) & (df_r_f['sucursal'] == suc)]
@@ -195,12 +210,15 @@ with tab1:
         xs_v = [x for x, m in zip(xs, mask) if m]
         ys_v = [y for y, m in zip(ys, mask) if m]
         if xs_v:
-            ax.plot(xs_v, ys_v, marker='o', linewidth=2.2, markersize=6,
-                    color=color, label=suc)
+            ax.plot(xs_v, ys_v, marker='D' if es_total else 'o',
+                    linewidth=3.4 if es_total else 2.2, markersize=8 if es_total else 6,
+                    linestyle='--' if es_total else '-',
+                    color=color, label=suc, zorder=5 if es_total else 3)
             ax.annotate(f'{ys_v[-1]:.1%}',
                         (xs_v[-1], ys_v[-1]),
                         textcoords='offset points', xytext=(7, 0),
-                        fontsize=8.5, color=color, fontweight='bold')
+                        fontsize=9.5 if es_total else 8.5, color=color,
+                        fontweight='bold')
 
     # Líneas de referencia
     ax.axhline(0.95, color='#70AD47', linewidth=1, linestyle='--', alpha=0.6, label='95% (meta)')
