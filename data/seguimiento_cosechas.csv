@@ -1,223 +1,223 @@
 sucursal,mes,n_creditos,monto_colocado,cosecha_pct,metaliado
 Cancún,2026-03,35,2980895.85,81.1,Nacional
 Cancún,2026-04,32,2635561.16,82.9,Nacional
-Cancún,2026-05,34,3112179.81,81.7,Nacional
-Cancún,2026-06,32,3465769.17,81.2,Nacional
+Cancún,2026-05,34,3112179.81,83.3,Nacional
+Cancún,2026-06,32,3465769.17,81.5,Nacional
 Cancún,2026-07,35,3269203.08,92.2,Nacional
-Cancún,2026-08,10,784141.32,100.0,Nacional
+Cancún,2026-08,11,865605.64,100.0,Nacional
 Cozumel,2026-03,19,1392582.3,92.7,Nacional
-Cozumel,2026-04,22,2011101.99,88.1,Nacional
-Cozumel,2026-05,16,1288768.95,84.4,Nacional
-Cozumel,2026-06,18,1442390.49,83.5,Nacional
-Cozumel,2026-07,18,1404987.0,96.6,Nacional
-Cozumel,2026-08,6,668924.59,100.0,Nacional
+Cozumel,2026-04,22,2011101.99,88.5,Nacional
+Cozumel,2026-05,16,1288768.95,84.0,Nacional
+Cozumel,2026-06,18,1442390.49,83.6,Nacional
+Cozumel,2026-07,18,1404987.0,100.0,Nacional
+Cozumel,2026-08,7,757506.99,100.0,Nacional
 Fresnillo,2026-03,18,2105961.72,91.1,Nacional
-Fresnillo,2026-04,23,1929980.95,56.0,Nacional
-Fresnillo,2026-05,18,1434535.36,86.4,Nacional
-Fresnillo,2026-06,23,1888779.79,99.6,Nacional
-Fresnillo,2026-07,16,1661581.86,100.0,Nacional
+Fresnillo,2026-04,23,1929980.95,56.2,Nacional
+Fresnillo,2026-05,18,1434535.36,85.0,Nacional
+Fresnillo,2026-06,23,1888779.79,99.4,Nacional
+Fresnillo,2026-07,16,1661581.86,99.6,Nacional
 Fresnillo,2026-08,7,625319.03,100.0,Nacional
 Guadalajara,2026-03,23,3636815.86,61.6,Nacional
-Guadalajara,2026-04,19,1901217.76,81.8,Nacional
+Guadalajara,2026-04,19,1901217.76,81.6,Nacional
 Guadalajara,2026-05,20,1805360.88,87.8,Nacional
 Guadalajara,2026-06,10,1409375.9,90.9,Nacional
 Guadalajara,2026-07,11,1122183.46,100.0,Nacional
-Guadalajara,2026-08,5,392496.85,100.0,Nacional
+Guadalajara,2026-08,7,532781.86,100.0,Nacional
 Irapuato,2026-03,30,2710213.55,89.5,Nacional
-Irapuato,2026-04,27,2642932.21,92.4,Nacional
+Irapuato,2026-04,27,2642932.21,92.0,Nacional
 Irapuato,2026-05,23,1716713.95,90.5,Nacional
 Irapuato,2026-06,27,2434757.23,96.9,Nacional
 Irapuato,2026-07,41,3710053.19,94.7,Nacional
-Irapuato,2026-08,6,690063.84,100.0,Nacional
-Morelia,2026-03,22,1900446.32,77.8,Nacional
+Irapuato,2026-08,8,1009057.01,100.0,Nacional
+Morelia,2026-03,22,1900446.32,78.0,Nacional
 Morelia,2026-04,25,2253249.2,81.3,Nacional
-Morelia,2026-05,21,1827412.87,74.8,Nacional
+Morelia,2026-05,21,1827412.87,75.0,Nacional
 Morelia,2026-06,9,743132.54,87.2,Nacional
 Morelia,2026-07,25,2182398.63,97.5,Nacional
-Morelia,2026-08,9,678208.95,100.0,Nacional
-Motul,2026-03,23,1619630.72,88.6,Nacional
-Motul,2026-04,32,2155495.46,85.9,Nacional
-Motul,2026-05,20,1362424.97,91.7,Nacional
-Motul,2026-06,26,1837856.79,83.7,Nacional
-Motul,2026-07,35,2324305.79,95.7,Nacional
-Motul,2026-08,8,707944.85,100.0,Nacional
+Morelia,2026-08,10,788936.95,100.0,Nacional
+Motul,2026-03,23,1619630.72,88.9,Nacional
+Motul,2026-04,32,2155495.46,85.6,Nacional
+Motul,2026-05,20,1362424.97,94.2,Nacional
+Motul,2026-06,26,1837856.79,84.0,Nacional
+Motul,2026-07,35,2324305.79,95.6,Nacional
+Motul,2026-08,10,835409.06,100.0,Nacional
 Mérida,2026-03,9,617624.55,70.9,Nacional
 Mérida,2026-04,11,815843.15,70.3,Nacional
-Mérida,2026-05,12,868423.25,64.4,Nacional
-Mérida,2026-06,10,687700.69,60.2,Nacional
+Mérida,2026-05,12,868423.25,65.1,Nacional
+Mérida,2026-06,10,687700.69,56.8,Nacional
 Mérida,2026-07,11,729169.05,93.2,Nacional
-Mérida,2026-08,5,296036.47,100.0,Nacional
+Mérida,2026-08,5,296036.47,99.0,Nacional
 Pachuca,2026-03,12,913077.96,89.2,Nacional
 Pachuca,2026-04,13,1027653.49,84.2,Nacional
 Pachuca,2026-05,8,672371.19,80.1,Nacional
-Pachuca,2026-06,13,1302280.05,76.9,Nacional
+Pachuca,2026-06,13,1302280.05,78.0,Nacional
 Pachuca,2026-07,16,1003886.82,88.7,Nacional
-Pachuca,2026-08,5,405721.28,100.0,Nacional
+Pachuca,2026-08,7,507591.04,100.0,Nacional
 Playa del Carmen,2026-03,19,1710203.37,95.3,Nacional
-Playa del Carmen,2026-04,17,1419681.38,82.7,Nacional
+Playa del Carmen,2026-04,17,1419681.38,82.8,Nacional
 Playa del Carmen,2026-05,13,1112814.18,76.1,Nacional
-Playa del Carmen,2026-06,13,1107379.95,70.9,Nacional
+Playa del Carmen,2026-06,13,1107379.95,79.3,Nacional
 Playa del Carmen,2026-07,18,1465260.36,97.6,Nacional
-Playa del Carmen,2026-08,4,405975.36,100.0,Nacional
+Playa del Carmen,2026-08,5,571639.36,100.0,Nacional
 Salamanca,2026-03,39,5784739.5,93.8,Nacional
 Salamanca,2026-04,43,5424572.62,93.6,Nacional
-Salamanca,2026-05,46,6113984.23,84.9,Nacional
-Salamanca,2026-06,40,5858181.69,89.3,Nacional
-Salamanca,2026-07,47,6084053.82,98.4,Nacional
-Salamanca,2026-08,20,2653907.33,100.0,Nacional
+Salamanca,2026-05,46,6113984.23,86.2,Nacional
+Salamanca,2026-06,40,5858181.69,89.5,Nacional
+Salamanca,2026-07,47,6084053.82,96.7,Nacional
+Salamanca,2026-08,22,2963515.59,100.0,Nacional
 San Juan del Río,2026-03,20,1867036.16,95.9,Nacional
 San Juan del Río,2026-04,13,1214860.8,95.0,Nacional
-San Juan del Río,2026-05,15,1348805.13,100.0,Nacional
+San Juan del Río,2026-05,15,1348805.13,99.7,Nacional
 San Juan del Río,2026-06,17,1533628.69,99.5,Nacional
 San Juan del Río,2026-07,18,1400395.41,100.0,Nacional
-San Juan del Río,2026-08,6,526150.09,100.0,Nacional
-Tequisquiapan,2026-03,13,1562757.65,86.9,Nacional
+San Juan del Río,2026-08,7,585429.45,100.0,Nacional
+Tequisquiapan,2026-03,13,1562757.65,87.2,Nacional
 Tequisquiapan,2026-04,5,403786.24,91.0,Nacional
-Tequisquiapan,2026-05,10,685515.18,83.1,Nacional
+Tequisquiapan,2026-05,10,685515.18,83.2,Nacional
 Tequisquiapan,2026-06,9,1001042.66,100.0,Nacional
 Tequisquiapan,2026-07,12,1253297.82,95.3,Nacional
 Tequisquiapan,2026-08,3,168306.55,100.0,Nacional
 Valladolid,2026-03,20,1428383.88,88.6,Nacional
-Valladolid,2026-04,15,901245.33,74.4,Nacional
-Valladolid,2026-05,22,1440551.66,71.0,Nacional
-Valladolid,2026-06,17,1140264.53,93.2,Nacional
+Valladolid,2026-04,15,901245.33,74.5,Nacional
+Valladolid,2026-05,22,1440551.66,72.2,Nacional
+Valladolid,2026-06,17,1140264.53,92.9,Nacional
 Valladolid,2026-07,11,755661.22,93.2,Nacional
 Valladolid,2026-08,6,326839.58,100.0,Nacional
 Valle de Toluca,2026-03,30,2690220.36,91.5,Nacional
-Valle de Toluca,2026-04,25,1670091.49,91.8,Nacional
-Valle de Toluca,2026-05,25,1509139.18,88.4,Nacional
-Valle de Toluca,2026-06,33,2236972.75,97.8,Nacional
-Valle de Toluca,2026-07,33,2103991.77,100.0,Nacional
-Valle de Toluca,2026-08,14,950300.26,100.0,Nacional
+Valle de Toluca,2026-04,25,1670091.49,91.9,Nacional
+Valle de Toluca,2026-05,25,1509139.18,87.9,Nacional
+Valle de Toluca,2026-06,33,2236972.75,97.1,Nacional
+Valle de Toluca,2026-07,33,2103991.77,97.2,Nacional
+Valle de Toluca,2026-08,16,1074504.63,100.0,Nacional
 Zinacantepec,2026-03,28,2531079.35,91.2,Nacional
 Zinacantepec,2026-04,28,2362012.19,86.0,Nacional
-Zinacantepec,2026-05,21,1631395.67,79.1,Nacional
-Zinacantepec,2026-06,13,1460340.91,90.4,Nacional
+Zinacantepec,2026-05,21,1631395.67,77.9,Nacional
+Zinacantepec,2026-06,13,1460340.91,90.3,Nacional
 Zinacantepec,2026-07,24,1956643.13,100.0,Nacional
-Zinacantepec,2026-08,7,618178.4,100.0,Nacional
+Zinacantepec,2026-08,8,716851.36,100.0,Nacional
 TOTAL,2026-03,360,35451669.1,86.6,Nacional
 TOTAL,2026-04,350,30769285.42,85.0,Nacional
-TOTAL,2026-05,324,27930396.46,83.5,Nacional
-TOTAL,2026-06,310,29549853.83,88.9,Nacional
-TOTAL,2026-07,371,32427072.41,96.7,Nacional
-TOTAL,2026-08,121,10898514.75,100.0,Nacional
+TOTAL,2026-05,324,27930396.46,84.0,Nacional
+TOTAL,2026-06,310,29549853.83,89.1,Nacional
+TOTAL,2026-07,371,32427072.41,96.4,Nacional
+TOTAL,2026-08,139,12625330.57,100.0,Nacional
 Guadalajara,2026-03,23,3636815.86,61.6,Adan
-Guadalajara,2026-04,19,1901217.76,81.8,Adan
+Guadalajara,2026-04,19,1901217.76,81.6,Adan
 Guadalajara,2026-05,20,1805360.88,87.8,Adan
 Guadalajara,2026-06,10,1409375.9,90.9,Adan
 Guadalajara,2026-07,11,1122183.46,100.0,Adan
-Guadalajara,2026-08,5,392496.85,100.0,Adan
-Motul,2026-03,23,1619630.72,88.6,Adan
-Motul,2026-04,32,2155495.46,85.9,Adan
-Motul,2026-05,20,1362424.97,91.7,Adan
-Motul,2026-06,26,1837856.79,83.7,Adan
-Motul,2026-07,35,2324305.79,95.7,Adan
-Motul,2026-08,8,707944.85,100.0,Adan
+Guadalajara,2026-08,7,532781.86,100.0,Adan
+Motul,2026-03,23,1619630.72,88.9,Adan
+Motul,2026-04,32,2155495.46,85.6,Adan
+Motul,2026-05,20,1362424.97,94.2,Adan
+Motul,2026-06,26,1837856.79,84.0,Adan
+Motul,2026-07,35,2324305.79,95.6,Adan
+Motul,2026-08,10,835409.06,100.0,Adan
 Mérida,2026-03,9,617624.55,70.9,Adan
 Mérida,2026-04,11,815843.15,70.3,Adan
-Mérida,2026-05,12,868423.25,64.4,Adan
-Mérida,2026-06,10,687700.69,60.2,Adan
+Mérida,2026-05,12,868423.25,65.1,Adan
+Mérida,2026-06,10,687700.69,56.8,Adan
 Mérida,2026-07,11,729169.05,93.2,Adan
-Mérida,2026-08,5,296036.47,100.0,Adan
+Mérida,2026-08,5,296036.47,99.0,Adan
 San Juan del Río,2026-03,20,1867036.16,95.9,Adan
 San Juan del Río,2026-04,13,1214860.8,95.0,Adan
-San Juan del Río,2026-05,15,1348805.13,100.0,Adan
+San Juan del Río,2026-05,15,1348805.13,99.7,Adan
 San Juan del Río,2026-06,17,1533628.69,99.5,Adan
 San Juan del Río,2026-07,18,1400395.41,100.0,Adan
-San Juan del Río,2026-08,6,526150.09,100.0,Adan
-Tequisquiapan,2026-03,13,1562757.65,86.9,Adan
+San Juan del Río,2026-08,7,585429.45,100.0,Adan
+Tequisquiapan,2026-03,13,1562757.65,87.2,Adan
 Tequisquiapan,2026-04,5,403786.24,91.0,Adan
-Tequisquiapan,2026-05,10,685515.18,83.1,Adan
+Tequisquiapan,2026-05,10,685515.18,83.2,Adan
 Tequisquiapan,2026-06,9,1001042.66,100.0,Adan
 Tequisquiapan,2026-07,12,1253297.82,95.3,Adan
 Tequisquiapan,2026-08,3,168306.55,100.0,Adan
-TOTAL,2026-03,88,9303864.94,78.1,Adan
-TOTAL,2026-04,80,6491203.41,84.7,Adan
-TOTAL,2026-05,77,6070529.41,87.5,Adan
-TOTAL,2026-06,72,6469604.73,89.1,Adan
-TOTAL,2026-07,87,6829351.53,97.0,Adan
-TOTAL,2026-08,27,2090934.81,100.0,Adan
+TOTAL,2026-03,88,9303864.94,78.2,Adan
+TOTAL,2026-04,80,6491203.41,84.6,Adan
+TOTAL,2026-05,77,6070529.41,88.1,Adan
+TOTAL,2026-06,72,6469604.73,88.8,Adan
+TOTAL,2026-07,87,6829351.53,96.9,Adan
+TOTAL,2026-08,32,2417963.39,99.9,Adan
 Cancún,2026-03,35,2980895.85,81.1,Jessy
 Cancún,2026-04,32,2635561.16,82.9,Jessy
-Cancún,2026-05,34,3112179.81,81.7,Jessy
-Cancún,2026-06,32,3465769.17,81.2,Jessy
+Cancún,2026-05,34,3112179.81,83.3,Jessy
+Cancún,2026-06,32,3465769.17,81.5,Jessy
 Cancún,2026-07,35,3269203.08,92.2,Jessy
-Cancún,2026-08,10,784141.32,100.0,Jessy
+Cancún,2026-08,11,865605.64,100.0,Jessy
 Cozumel,2026-03,19,1392582.3,92.7,Jessy
-Cozumel,2026-04,22,2011101.99,88.1,Jessy
-Cozumel,2026-05,16,1288768.95,84.4,Jessy
-Cozumel,2026-06,18,1442390.49,83.5,Jessy
-Cozumel,2026-07,18,1404987.0,96.6,Jessy
-Cozumel,2026-08,6,668924.59,100.0,Jessy
+Cozumel,2026-04,22,2011101.99,88.5,Jessy
+Cozumel,2026-05,16,1288768.95,84.0,Jessy
+Cozumel,2026-06,18,1442390.49,83.6,Jessy
+Cozumel,2026-07,18,1404987.0,100.0,Jessy
+Cozumel,2026-08,7,757506.99,100.0,Jessy
 Playa del Carmen,2026-03,19,1710203.37,95.3,Jessy
-Playa del Carmen,2026-04,17,1419681.38,82.7,Jessy
+Playa del Carmen,2026-04,17,1419681.38,82.8,Jessy
 Playa del Carmen,2026-05,13,1112814.18,76.1,Jessy
-Playa del Carmen,2026-06,13,1107379.95,70.9,Jessy
+Playa del Carmen,2026-06,13,1107379.95,79.3,Jessy
 Playa del Carmen,2026-07,18,1465260.36,97.6,Jessy
-Playa del Carmen,2026-08,4,405975.36,100.0,Jessy
+Playa del Carmen,2026-08,5,571639.36,100.0,Jessy
 Valladolid,2026-03,20,1428383.88,88.6,Jessy
-Valladolid,2026-04,15,901245.33,74.4,Jessy
-Valladolid,2026-05,22,1440551.66,71.0,Jessy
-Valladolid,2026-06,17,1140264.53,93.2,Jessy
+Valladolid,2026-04,15,901245.33,74.5,Jessy
+Valladolid,2026-05,22,1440551.66,72.2,Jessy
+Valladolid,2026-06,17,1140264.53,92.9,Jessy
 Valladolid,2026-07,11,755661.22,93.2,Jessy
 Valladolid,2026-08,6,326839.58,100.0,Jessy
 TOTAL,2026-03,93,7512065.4,87.9,Jessy
-TOTAL,2026-04,86,6967589.86,83.3,Jessy
-TOTAL,2026-05,85,6954314.6,79.1,Jessy
-TOTAL,2026-06,80,7155804.14,82.0,Jessy
-TOTAL,2026-07,82,6895111.66,94.3,Jessy
-TOTAL,2026-08,26,2185880.85,100.0,Jessy
+TOTAL,2026-04,86,6967589.86,83.4,Jessy
+TOTAL,2026-05,85,6954314.6,80.0,Jessy
+TOTAL,2026-06,80,7155804.14,83.4,Jessy
+TOTAL,2026-07,82,6895111.66,95.1,Jessy
+TOTAL,2026-08,29,2521591.57,100.0,Jessy
 Fresnillo,2026-03,18,2105961.72,91.1,Jessica
-Fresnillo,2026-04,23,1929980.95,56.0,Jessica
-Fresnillo,2026-05,18,1434535.36,86.4,Jessica
-Fresnillo,2026-06,23,1888779.79,99.6,Jessica
-Fresnillo,2026-07,16,1661581.86,100.0,Jessica
+Fresnillo,2026-04,23,1929980.95,56.2,Jessica
+Fresnillo,2026-05,18,1434535.36,85.0,Jessica
+Fresnillo,2026-06,23,1888779.79,99.4,Jessica
+Fresnillo,2026-07,16,1661581.86,99.6,Jessica
 Fresnillo,2026-08,7,625319.03,100.0,Jessica
 Irapuato,2026-03,30,2710213.55,89.5,Jessica
-Irapuato,2026-04,27,2642932.21,92.4,Jessica
+Irapuato,2026-04,27,2642932.21,92.0,Jessica
 Irapuato,2026-05,23,1716713.95,90.5,Jessica
 Irapuato,2026-06,27,2434757.23,96.9,Jessica
 Irapuato,2026-07,41,3710053.19,94.7,Jessica
-Irapuato,2026-08,6,690063.84,100.0,Jessica
-Morelia,2026-03,22,1900446.32,77.8,Jessica
+Irapuato,2026-08,8,1009057.01,100.0,Jessica
+Morelia,2026-03,22,1900446.32,78.0,Jessica
 Morelia,2026-04,25,2253249.2,81.3,Jessica
-Morelia,2026-05,21,1827412.87,74.8,Jessica
+Morelia,2026-05,21,1827412.87,75.0,Jessica
 Morelia,2026-06,9,743132.54,87.2,Jessica
 Morelia,2026-07,25,2182398.63,97.5,Jessica
-Morelia,2026-08,9,678208.95,100.0,Jessica
+Morelia,2026-08,10,788936.95,100.0,Jessica
 Salamanca,2026-03,39,5784739.5,93.8,Jessica
 Salamanca,2026-04,43,5424572.62,93.6,Jessica
-Salamanca,2026-05,46,6113984.23,84.9,Jessica
-Salamanca,2026-06,40,5858181.69,89.3,Jessica
-Salamanca,2026-07,47,6084053.82,98.4,Jessica
-Salamanca,2026-08,20,2653907.33,100.0,Jessica
+Salamanca,2026-05,46,6113984.23,86.2,Jessica
+Salamanca,2026-06,40,5858181.69,89.5,Jessica
+Salamanca,2026-07,47,6084053.82,96.7,Jessica
+Salamanca,2026-08,22,2963515.59,100.0,Jessica
 TOTAL,2026-03,109,12501361.09,90.0,Jessica
-TOTAL,2026-04,118,12250734.98,85.2,Jessica
-TOTAL,2026-05,108,11092646.41,84.3,Jessica
-TOTAL,2026-06,99,10924851.25,92.6,Jessica
-TOTAL,2026-07,129,13638087.5,97.5,Jessica
-TOTAL,2026-08,42,4647499.15,100.0,Jessica
+TOTAL,2026-04,118,12250734.98,85.1,Jessica
+TOTAL,2026-05,108,11092646.41,84.9,Jessica
+TOTAL,2026-06,99,10924851.25,92.7,Jessica
+TOTAL,2026-07,129,13638087.5,96.7,Jessica
+TOTAL,2026-08,47,5386828.58,100.0,Jessica
 Pachuca,2026-03,12,913077.96,89.2,Marisol
 Pachuca,2026-04,13,1027653.49,84.2,Marisol
 Pachuca,2026-05,8,672371.19,80.1,Marisol
-Pachuca,2026-06,13,1302280.05,76.9,Marisol
+Pachuca,2026-06,13,1302280.05,78.0,Marisol
 Pachuca,2026-07,16,1003886.82,88.7,Marisol
-Pachuca,2026-08,5,405721.28,100.0,Marisol
+Pachuca,2026-08,7,507591.04,100.0,Marisol
 Valle de Toluca,2026-03,30,2690220.36,91.5,Marisol
-Valle de Toluca,2026-04,25,1670091.49,91.8,Marisol
-Valle de Toluca,2026-05,25,1509139.18,88.4,Marisol
-Valle de Toluca,2026-06,33,2236972.75,97.8,Marisol
-Valle de Toluca,2026-07,33,2103991.77,100.0,Marisol
-Valle de Toluca,2026-08,14,950300.26,100.0,Marisol
+Valle de Toluca,2026-04,25,1670091.49,91.9,Marisol
+Valle de Toluca,2026-05,25,1509139.18,87.9,Marisol
+Valle de Toluca,2026-06,33,2236972.75,97.1,Marisol
+Valle de Toluca,2026-07,33,2103991.77,97.2,Marisol
+Valle de Toluca,2026-08,16,1074504.63,100.0,Marisol
 Zinacantepec,2026-03,28,2531079.35,91.2,Marisol
 Zinacantepec,2026-04,28,2362012.19,86.0,Marisol
-Zinacantepec,2026-05,21,1631395.67,79.1,Marisol
-Zinacantepec,2026-06,13,1460340.91,90.4,Marisol
+Zinacantepec,2026-05,21,1631395.67,77.9,Marisol
+Zinacantepec,2026-06,13,1460340.91,90.3,Marisol
 Zinacantepec,2026-07,24,1956643.13,100.0,Marisol
-Zinacantepec,2026-08,7,618178.4,100.0,Marisol
+Zinacantepec,2026-08,8,716851.36,100.0,Marisol
 TOTAL,2026-03,70,6134377.67,91.0,Marisol
-TOTAL,2026-04,66,5059757.17,87.5,Marisol
-TOTAL,2026-05,54,3812906.04,82.9,Marisol
-TOTAL,2026-06,59,4999593.71,90.2,Marisol
-TOTAL,2026-07,73,5064521.72,97.7,Marisol
-TOTAL,2026-08,26,1974199.94,100.0,Marisol
+TOTAL,2026-04,66,5059757.17,87.6,Marisol
+TOTAL,2026-05,54,3812906.04,82.2,Marisol
+TOTAL,2026-06,59,4999593.71,90.1,Marisol
+TOTAL,2026-07,73,5064521.72,96.6,Marisol
+TOTAL,2026-08,31,2298947.03,100.0,Marisol
