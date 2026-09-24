@@ -1,8 +1,8 @@
 @echo off
 REM ── Actualización diaria del dashboard ────────────────────────────────────
-REM Ejecutar desde: C:\Users\mgrdatos\Documents\META_TORAL_local\
+REM Se ejecuta desde la carpeta del proyecto (proyectos\reportes_operativos), padre de este .bat
 
-cd /d C:\Users\mgrdatos\Documents\META_TORAL_local
+cd /d "%~dp0.."
 
 echo [%date% %time%] Generando datos metaliados...
 python SCRIPTS_PYTHON\generar_seguimiento_metaliados.py >> seguimiento_web\actualizar.log 2>&1
