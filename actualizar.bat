@@ -5,10 +5,10 @@ REM Ejecutar desde: C:\Users\mgrdatos\Documents\META_TORAL_local\
 cd /d C:\Users\mgrdatos\Documents\META_TORAL_local
 
 echo [%date% %time%] Generando datos metaliados...
-python generar_seguimiento_metaliados.py >> seguimiento_web\actualizar.log 2>&1
+python SCRIPTS_PYTHON\generar_seguimiento_metaliados.py >> seguimiento_web\actualizar.log 2>&1
 
 echo [%date% %time%] Generando cosechas por region...
-python generar_cosechas.py >> seguimiento_web\actualizar.log 2>&1
+python SCRIPTS_PYTHON\generar_cosechas.py >> seguimiento_web\actualizar.log 2>&1
 
 echo [%date% %time%] Subiendo a GitHub...
 cd seguimiento_web
