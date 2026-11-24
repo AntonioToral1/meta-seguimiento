@@ -290,6 +290,8 @@ with tab1:
 # ═══════════════════════════════════════════════════════════════════════════════
 with tab2:
     st.subheader(f'Cosecha por mes de colocación — {region_sel}')
+    st.caption('Cada línea es un mes calendario completo de colocación y se sigue en todos los cortes, '
+               'aunque ya tenga más de 6 meses (cosechas cerradas), para ver si sube por recuperación.')
 
     col_suc, col_mes = st.columns([1, 2])
     etiqueta_unidad = 'Todas las regiones' if es_nacional else 'Todas las sucursales'
@@ -343,14 +345,14 @@ with tab2:
     fig2.patch.set_facecolor('white')
     ax2.set_facecolor('#FAFAFA')
 
-    cmap = matplotlib.colormaps.get_cmap('tab10')
+    cmap = matplotlib.colormaps.get_cmap('tab20')  # ~13 cohortes: tab10 repetía colores
     xs2 = list(range(len(bloques_ventana)))
 
     for i, periodo in enumerate(periodos_disp):
         df_m = df_plot[df_plot['periodo'] == periodo]
         if df_m.empty:
             continue
-        color = cmap(i % 10)
+        color = cmap(i % 20)
         ys2 = []
         for b in bloques_ventana:
             row = df_m[df_m['bloque'] == b]
